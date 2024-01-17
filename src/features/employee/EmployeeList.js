@@ -1,11 +1,19 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { employeeState, fetchemployeeAsync } from "./employeeSlice";
+import {
+  deleteEmployeeAsync,
+  employeeState,
+  fetchemployeeAsync,
+} from "./employeeSlice";
 
 export default function EmployeeList() {
   const employees = useSelector(employeeState);
   const dispatch = useDispatch();
   console.log(employees);
+
+  const deleteEmp = (id) => {
+    dispatch(deleteEmployeeAsync(id));
+  };
 
   return (
     <>
@@ -25,11 +33,17 @@ export default function EmployeeList() {
               <tr key={emp.id}>
                 <td>{emp.id}</td>
                 <td>{emp.firstName}</td>
-                <td>{emp.firstName}</td>
+                <td>{emp.lastName}</td>
                 <td>{emp.email}</td>
                 <td>{emp.sal}</td>
                 <td>
-                    <button>DEL</button>
+                  <button
+                    onClick={() => {
+                      deleteEmp(emp.id);
+                    }}
+                  >
+                    DEL
+                  </button>
                 </td>
               </tr>
             );

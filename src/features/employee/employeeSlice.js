@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchEmployees } from "./employeeAPI";
+import { fetchEmployees, deleteEmployee } from "./employeeAPI";
 
 const initialState = {
   employees: [],
@@ -14,9 +14,9 @@ export const fetchemployeeAsync = createAsyncThunk(
   }
 );
 export const deleteEmployeeAsync = createAsyncThunk(
-  "employees/fetchemployees",
-  async () => {
-    const response = await fetchEmployees();
+  "employees/deleteEmployee",
+  async (id) => {
+    const response = await deleteEmployee(id);
     // The value we return becomes the `fulfilled` action payload
     return response.data;
   }
@@ -29,6 +29,11 @@ export const employeeSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchemployeeAsync.fulfilled, (state, action) => {
       state.employees.push(...action.payload);
+    });
+    builder.addCase(deleteEmployeeAsync.fulfilled, (state, action) => {
+      alert("deleted successfully");
+      console.log(state, action);
+      // state.employees.push(...action.payload);
     });
   },
 });
